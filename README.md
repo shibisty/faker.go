@@ -365,3 +365,7 @@ This allows using the generator from:
 # License
 
 MIT
+
+[![Patreon](https://img.shields.io/badge/Support-Patreon-FF424D?logo=patreon&logoColor=white)](https://www.patreon.com/cw/shibisty)
+
+If this project helps you, consider supporting its development on Patreon ❤️
