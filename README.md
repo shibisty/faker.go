@@ -1,5 +1,7 @@
 # faker.go
 
+[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/cw/shibisty)
+
 > Lightweight fake data generator for Go with zero dependencies.
 >
 > Generate realistic fake data for tests, database seeders, demos and mock APIs.
