@@ -366,6 +366,6 @@ This allows using the generator from:
 
 MIT
 
-[![Patreon](https://img.shields.io/badge/Support-Patreon-FF424D?logo=patreon&logoColor=white)](https://www.patreon.com/cw/shibisty)
+[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/cw/shibisty)
 
 If this project helps you, consider supporting its development on Patreon ❤️
