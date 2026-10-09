@@ -6,12 +6,8 @@
 >
 > Generate realistic fake data for tests, database seeders, demos and mock APIs.
 
-<<<<<<< HEAD
-[![CI](https://github.com/shibisty/faker.go/actions/workflows/ci.yml/badge.svg)](https://github.com/shibisty/faker.go/actions/workflows/ci.yml)
+[![CI](https://github.com/shibisty/faker.go/actions/workflows/ci.workflow.yml/badge.svg)](https://github.com/shibisty/faker.go/actions/workflows/ci.workflow.yml)
 [![Go Version](https://img.shields.io/badge/go-1.22+-00ADD8.svg)](https://go.dev/)
-=======
-[![Go Version](https://img.shields.io/badge/go-1.26+-00ADD8.svg)](https://go.dev/)
->>>>>>> a7eadfacd221c4c72f8fee20bddff88a867502ec
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 Unlike most faker libraries, **faker.go** provides both a familiar API (`faker.js` style) and automatic struct population using tags, making it ideal for database seeding and testing.
