@@ -2,45 +2,31 @@ package faker
 
 import "fmt"
 
-// AddressGen — namespace faker.Address, аналог faker.location из faker.js.
+// AddressGen is the faker.Address namespace, the counterpart of faker.location in faker.js.
 type AddressGen struct{ f *Faker }
 
+// City returns a city for the locale.
 func (a *AddressGen) City() string {
-	if a.f.Locale == "ru" {
-		return PickOne(a.f, ruCities)
-	}
-	
-	if a.f.Locale == "ua" {
-		return PickOne(a.f, uaCities)
-	}
-	
-	return PickOne(a.f, enCities)
+	return PickOne(a.f, a.f.loc().cities)
 }
 
+// Street returns a street with a house number in the locale format.
 func (a *AddressGen) Street() string {
-	if a.f.Locale == "ru" {
-		return fmt.Sprintf("%s, д. %d", PickOne(a.f, ruStreets), a.f.IntRange(1, 150))
-	}
-	
-	if a.f.Locale == "ua" {
-		return fmt.Sprintf("%s, д. %d", PickOne(a.f, uaStreets), a.f.IntRange(1, 150))
-	}
-	
-	return fmt.Sprintf("%d %s", a.f.IntRange(1, 9999), PickOne(a.f, enStreets))
+	l := a.f.loc()
+	return l.street(a.f, l.streets)
 }
 
+// Country returns a country name (in English for all locales).
 func (a *AddressGen) Country() string {
 	return PickOne(a.f, countries)
 }
 
+// ZipCode returns a zip code in the locale format.
 func (a *AddressGen) ZipCode() string {
-	if a.f.Locale == "ru" || a.f.Locale == "ua" {
-		return fmt.Sprintf("%06d", a.f.IntRange(100000, 999999))
-	}
-	return fmt.Sprintf("%05d", a.f.IntRange(10000, 99999))
+	return a.f.loc().zip(a.f)
 }
 
-// FullAddress собирает улицу, город, страну и индекс в одну строку.
+// FullAddress joins the street, city, country and zip code into one string.
 func (a *AddressGen) FullAddress() string {
 	return fmt.Sprintf("%s, %s, %s %s", a.Street(), a.City(), a.Country(), a.ZipCode())
 }

@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// InternetGen — namespace faker.Internet, аналог faker.internet из faker.js.
+// InternetGen is the faker.Internet namespace, the counterpart of faker.internet in faker.js.
 type InternetGen struct{ f *Faker }
 
 func (i *InternetGen) Email() string {
@@ -15,8 +15,8 @@ func (i *InternetGen) Email() string {
 	return fmt.Sprintf("%s%d@%s", strings.ToLower(local), i.f.IntRange(1, 999), domain)
 }
 
-// Username — алиас faker.Internet.Username() к faker.Person.Username(),
-// как в faker.js, где internet.userName() и person.firstName() пересекаются.
+// Username is an alias from faker.Internet.Username() to faker.Person.Username(),
+// as in faker.js, where internet.userName() and person.firstName() overlap.
 func (i *InternetGen) Username() string { return i.f.Person.Username() }
 
 func (i *InternetGen) URL() string {
@@ -31,8 +31,8 @@ func (i *InternetGen) IPv4() string {
 		i.f.IntRange(1, 254), i.f.IntRange(0, 255), i.f.IntRange(0, 255), i.f.IntRange(1, 254))
 }
 
-// Password генерирует случайный пароль. По умолчанию 12 символов,
-// опционально можно передать желаемую длину: Password(20).
+// Password generates a random password. The default length is 12 characters;
+// optionally pass the desired length: Password(20).
 func (i *InternetGen) Password(length ...int) string {
 	n := 12
 	if len(length) > 0 && length[0] > 0 {

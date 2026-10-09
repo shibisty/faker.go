@@ -1,27 +1,26 @@
-// package main generates realistic fake data for database seeders and tests —
+// Package faker generates realistic fake data for database seeders and tests —
 // a lightweight alternative to faker.js/gofakeit with zero external dependencies.
 //
-// There are two ways to use it:
+// There are two ways to use it.
 //
-//  1. Direct API calls, similar to faker.js (faker.person.firstName() -> f.Person.FirstName()):
+// Direct API calls, similar to faker.js (faker.person.firstName() → f.Person.FirstName()):
 //
-//     f := faker.New()
-//     f.Person.FullName()
-//     f.Internet.Email()
-//     f.Address.City()
+//	f := faker.New()
+//	f.Person.FullName()
+//	f.Internet.Email()
+//	f.Address.City()
 //
-//  2. Tag-based struct population (especially useful for seeders — your model
-//     is already annotated with `db:"..."` tags for the ORM, and now you can
-//     add `fake:"..."` tags as well):
+// Tag-based struct population, useful for seeders: the model already has
+// `db:"..."` tags for the ORM, and `fake:"..."` tags can sit next to them:
 //
-//     type User struct {
-//         Name  string `db:"name"  fake:"full_name"`
-//         Email string `db:"email" fake:"email"`
-//         Age   int    `db:"age"   fake:"int:18,65"`
-//     }
+//	type User struct {
+//		Name  string `db:"name"  fake:"full_name"`
+//		Email string `db:"email" fake:"email"`
+//		Age   int    `db:"age"   fake:"int:18,65"`
+//	}
 //
-//     var u User
-//     f.FillStruct(&u)
+//	var u User
+//	f.FillStruct(&u)
 package faker
 
 import (
@@ -32,17 +31,27 @@ import (
 
 // Faker generates fake data.
 //
-// A single Faker instance is NOT safe for concurrent use without external
-// synchronization. Create one Faker per goroutine when seeding in parallel,
-// or protect access with your own mutex.
+// Methods are safe to call from several goroutines: access to the random
+// source is synchronized. The generated sequence is deterministic for a
+// given seed only when the Faker is used from a single goroutine, and the
+// Locale field must not be changed while other goroutines use the Faker.
 type Faker struct {
 	rnd *rand.Rand
 	mu  sync.Mutex
 
-	// Locale affects Person and Address generators: "en" (default) or "ru".
+	// Locale affects Person and Address generators: "en" (default), "ru",
+	// "ua" (alias "uk"). Unknown values fall back to "en". See Locales().
 	// Lorem always generates classic pseudo-Latin lorem ipsum text, since
 	// that's the industry standard placeholder and is not localized.
 	Locale string
+
+	// RefDate is the "now" that Date.Past, Date.Future, Date.Birthday and the
+	// date_past/date_future/birthday tags count from. Zero (default) means
+	// time.Now(). Set it together with a seed to make dates reproducible:
+	//
+	//	f := faker.New(42)
+	//	f.RefDate = time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
+	RefDate time.Time
 
 	Person   *PersonGen
 	Internet *InternetGen
@@ -111,9 +120,13 @@ func (f *Faker) randomBytes(n int) []byte {
 }
 
 // PickOne returns a random element from a non-empty slice of any type.
+// It panics if items is empty.
 // Useful for custom value lists (for example, order statuses) directly
 // inside your seeder code.
 func PickOne[T any](f *Faker, items []T) T {
+	if len(items) == 0 {
+		panic("faker: PickOne called with an empty slice")
+	}
 	return items[f.intn(len(items))]
 }
 
@@ -183,8 +196,19 @@ type UniqueFaker struct{ f *Faker }
 // Unique returns a UniqueFaker wrapper for this Faker.
 func (f *Faker) Unique() *UniqueFaker { return &UniqueFaker{f: f} }
 
-func (u *UniqueFaker) Email() string    { return u.f.unique("email", u.f.Internet.Email) }
-func (u *UniqueFaker) Username() string { return u.f.unique("username", u.f.Person.Username) }
-func (u *UniqueFaker) Phone() string    { return u.f.unique("phone", u.f.Person.Phone) }
+// Email returns an email that has not been returned by Unique().Email() before.
+func (u *UniqueFaker) Email() string { return u.f.unique("email", u.f.Internet.Email) }
 
-func main() {}
+// Username returns a username that has not been returned by Unique().Username() before.
+func (u *UniqueFaker) Username() string { return u.f.unique("username", u.f.Person.Username) }
+
+// Phone returns a phone number that has not been returned by Unique().Phone() before.
+func (u *UniqueFaker) Phone() string { return u.f.unique("phone", u.f.Person.Phone) }
+
+// now returns RefDate, or the current time when RefDate is zero.
+func (f *Faker) now() time.Time {
+	if f.RefDate.IsZero() {
+		return time.Now()
+	}
+	return f.RefDate
+}

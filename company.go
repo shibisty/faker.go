@@ -1,6 +1,6 @@
 package faker
 
-// CompanyGen — namespace faker.Company, аналог faker.company из faker.js.
+// CompanyGen is the faker.Company namespace, the counterpart of faker.company in faker.js.
 type CompanyGen struct{ f *Faker }
 
 func (c *CompanyGen) Name() string {

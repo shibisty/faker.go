@@ -67,8 +67,8 @@ var userAgents = []string{
 	"Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15",
 }
 
-// loremWords — классический lorem ipsum: отраслевой стандарт для
-// текста-заполнителя, намеренно не переводится ни для какой локали.
+// loremWords is classic lorem ipsum: the industry standard for
+// placeholder text, intentionally not translated for any locale.
 var loremWords = []string{
 	"lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
 	"sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",

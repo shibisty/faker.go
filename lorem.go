@@ -2,7 +2,7 @@ package faker
 
 import "strings"
 
-// LoremGen — namespace faker.Lorem, аналог faker.lorem из faker.js.
+// LoremGen is the faker.Lorem namespace, the counterpart of faker.lorem in faker.js.
 type LoremGen struct{ f *Faker }
 
 func (l *LoremGen) Word() string {
@@ -44,7 +44,7 @@ func (l *LoremGen) Paragraph() string {
 	return l.Sentences(l.f.IntRange(3, 6))
 }
 
-// Paragraphs генерирует n параграфов, соединённых sep (например "\n\n").
+// Paragraphs generates n paragraphs joined by sep (for example "\n\n").
 func (l *LoremGen) Paragraphs(n int, sep string) string {
 	if n <= 0 {
 		return ""
