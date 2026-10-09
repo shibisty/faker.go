@@ -1,11 +1,17 @@
 # faker.go
 
+[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/cw/shibisty)
+
 > Lightweight fake data generator for Go with zero dependencies.
 >
 > Generate realistic fake data for tests, database seeders, demos and mock APIs.
 
+<<<<<<< HEAD
 [![CI](https://github.com/shibisty/faker.go/actions/workflows/ci.yml/badge.svg)](https://github.com/shibisty/faker.go/actions/workflows/ci.yml)
 [![Go Version](https://img.shields.io/badge/go-1.22+-00ADD8.svg)](https://go.dev/)
+=======
+[![Go Version](https://img.shields.io/badge/go-1.26+-00ADD8.svg)](https://go.dev/)
+>>>>>>> a7eadfacd221c4c72f8fee20bddff88a867502ec
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 Unlike most faker libraries, **faker.go** provides both a familiar API (`faker.js` style) and automatic struct population using tags, making it ideal for database seeding and testing.
@@ -311,6 +317,6 @@ go test -run '^$' -fuzz=FuzzGenerate -fuzztime=30s .
 
 MIT
 
-[![Patreon](https://img.shields.io/badge/Support-Patreon-FF424D?logo=patreon&logoColor=white)](https://www.patreon.com/cw/shibisty)
+[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/cw/shibisty)
 
 If this project helps you, consider supporting its development on Patreon ❤️
